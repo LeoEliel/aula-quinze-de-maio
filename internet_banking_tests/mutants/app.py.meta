@@ -1,0 +1,28 @@
+{
+    "exit_code_by_key": {
+        "app.x_get_db__mutmut_1": 1,
+        "app.x_get_db__mutmut_2": 1,
+        "app.x_get_db__mutmut_3": 1,
+        "app.x_get_db__mutmut_4": 1,
+        "app.x_get_db__mutmut_5": 1,
+        "app.x_init_db__mutmut_1": 33,
+        "app.x_init_db__mutmut_2": 33
+    },
+    "durations_by_key": {
+        "app.x_get_db__mutmut_1": 0.225352,
+        "app.x_get_db__mutmut_2": 0.238717,
+        "app.x_get_db__mutmut_3": 0.281678,
+        "app.x_get_db__mutmut_4": 0.280386,
+        "app.x_get_db__mutmut_5": 0.310897
+    },
+    "type_check_error_by_key": {},
+    "estimated_durations_by_key": {
+        "app.x_init_db__mutmut_1": 0,
+        "app.x_init_db__mutmut_2": 0,
+        "app.x_get_db__mutmut_1": 0.3366583460010588,
+        "app.x_get_db__mutmut_2": 0.3366583460010588,
+        "app.x_get_db__mutmut_3": 0.3366583460010588,
+        "app.x_get_db__mutmut_4": 0.3366583460010588,
+        "app.x_get_db__mutmut_5": 0.3366583460010588
+    }
+}

@@ -1,0 +1,87 @@
+Teste de Software
+Roteiro - GitHub Education Copilot
+Parte 1 - conta github e verificação institucional
+Passo 1. Acesse https://github.com e crie uma conta gratuita caso ainda não tenha. Use o e-mail
+institucional do IFRO como e-mail principal - ou adicione-o a uma conta existente em:
+Settings → Emails → Add email address
+
+Passo 2. Acesse o portal do GitHub Education e clique em "Join GitHub Education":
+https://education.github.com
+
+Passo 3. Selecione seu perfil conforme sua situação:
+• Professor: clique em "Get teacher benefits"
+• Estudante: clique em "Get student benefits"
+Passo 4. Preencha o formulário de verificação com as informações abaixo:
+• Nome completo conforme documento oficial
+• Nome da instituição: Instituto Federal de Rondônia — IFRO
+• E-mail institucional: seu endereço @ifro.edu.br
+• Como você usa o GitHub: descreva brevemente - exemplo: "Disciplina de Teste de Software
+- automação de testes com Python e Flask"
+Passo 5. Envie o comprovante de vínculo institucional. O GitHub aceita os seguintes documentos:
+Para professor:
+• Contracheque ou holerite com nome da instituição
+• Carteira funcional ou crachá institucional fotografado
+Para estudante:
+• Comprovante de matrícula emitido pelo SUAP
+• Carteirinha estudantil com data de validade vigente
+Passo 6. Aguarde a aprovação. O GitHub responde em até 3 dias úteis por e-mail. Aprovado, o
+benefício fica ativo automaticamente na conta - nenhuma ação adicional é necessária.
+Atenção: Se o e-mail @ifro.edu.br não for reconhecido automaticamente pelo GitHub,
+envie um documento de vínculo institucional digitalizado como comprovante adicional no
+formulário.
+
+Dr. Claudinei de Oliveira
+
+1
+
+PARTE 2 - ATIVAR GITHUB COPILOT
+Passo 7. Após receber o e-mail de aprovação, acesse a página de configurações do Copilot:
+https://github.com/settings/copilot
+
+Ative o Copilot gratuito vinculado ao benefício Education. Não é necessário cadastrar cartão de
+crédito.
+Passo 8. Confirme que o status exibe a mensagem abaixo na página de configurações:
+"Copilot is active"
+Atenção: Se o status exibir "Copilot is not available", verifique se o e-mail
+institucional está confirmado na conta GitHub e se a aprovação do Education foi
+concluída.
+PARTE 3 — INSTALAR E CONFIGURAR NO VS CODE
+Passo 9. Abra o VS Code. Acesse o painel de extensões com o atalho abaixo e pesquise "GitHub
+Copilot". Instale a extensão oficial da GitHub:
+Ctrl+Shift+X → pesquisar: GitHub Copilot → Install
+Passo 10. Após a instalação, clique em "Sign in to GitHub" no canto inferior esquerdo do VS Code.
+O navegador abrirá automaticamente para autenticação. Faça login com a conta GitHub aprovada no
+Education e autorize o VS Code.
+Passo 11. Abra o arquivo app.py da disciplina no VS Code. Posicione o cursor após a última função
+e aguarde 2 segundos. Se o Copilot sugerir código em cinza, a integração está funcionando:
+Tab → aceita a sugestão do Copilot
+Esc → recusa a sugestão e mantém o cursor
+Alt+] → próxima sugestão alternativa
+
+Dr. Claudinei de Oliveira
+
+2
+
+Passo 12. Verifique a configuração para Python. Acesse:
+Settings → Extensions → GitHub Copilot → Enable for Python: On
+
+GitHub Copilot configurado com sucesso. O ambiente está pronto para o Sprint 1.
+
+Dr. Claudinei de Oliveira
+
+3
+
+REFERÊNCIAS BIBLIOGRÁFICAS
+GITHUB. GitHub Copilot documentation. San Francisco: GitHub, Inc., 2026. Disponível em:
+https://docs.github.com/en/copilot. Acesso em: maio 2026.
+GITHUB. GitHub Education. San Francisco: GitHub, Inc., 2026. Disponível em:
+https://education.github.com. Acesso em: maio 2026.
+BSTQB — BRAZILIAN SOFTWARE TESTING QUALIFICATIONS BOARD. Certified Tester
+Foundation Level Syllabus: versão 4.0. [S. l.]: ISTQB; BSTQB, 2023. Capítulo 6, p. 52–53. Disponível em:
+https://www.bstqb.online/files/syllabus_ctfl_4.0br.pdf. Acesso em: maio 2026.
+
+Dr. Claudinei de Oliveira
+
+4
+
+
