@@ -1,0 +1,24 @@
+# Dependências consolidadas — Sprints 1 a 8
+# Internet Banking Tests — IFRO Campus Ariquemes
+
+# Framework web
+flask>=3.0
+
+# Testes
+pytest>=8.0
+pytest-bdd>=7.0
+
+# Sprint 3 — Property-based testing
+hypothesis>=6.0
+
+# Sprint 4 — Mutation testing
+mutmut>=2.4
+
+# Sprint 1 — Testes legados (requests HTTP)
+requests>=2.31
+
+# Sprint 8 — Contract testing
+schemathesis>=3.30
+
+# Relatórios
+python-docx>=1.1

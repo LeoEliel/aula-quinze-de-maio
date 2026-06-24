@@ -71,7 +71,7 @@ r.font.color.rgb = RGBColor(0x1F, 0x4E, 0x79)
 
 sub = doc.add_paragraph()
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r2 = sub.add_run('BDD como Linguagem de Cobertura Semântica')
+r2 = sub.add_run('BDD como Linguagem de Cobertura Semântica (Versão Simplificada)')
 r2.font.size = Pt(14)
 r2.font.color.rgb = RGBColor(0x2E, 0x74, 0xB5)
 
@@ -99,7 +99,7 @@ doc.add_page_break()
 # ===== 1. LISTA BRUTA DOS MUTANTES =====
 heading(doc, '1. Lista Bruta dos Mutantes do Sprint 4 (Passo 2)', 1, '1F4E79')
 p = doc.add_paragraph()
-p.add_run('Transcrevemos a lista de mutantes sobreviventes detectados e selecionados da nossa suíte na Sprint 4:')
+p.add_run('Lista de mutantes sobreviventes resgatados do Sprint 4:')
 
 mutantes_info = [
     ('MUTANTE 1 (obrigatório):', 'Número: 1\nLinha original do app.py: if conta_origem["saldo"] < valor:\nLinha mutada: if conta_origem["saldo"] <= valor:'),
@@ -113,12 +113,12 @@ for lbl, desc in mutantes_info:
 
 # ===== 2. CLASSIFICAÇÃO DOS MUTANTES =====
 heading(doc, '2. Classificação dos Mutantes (Passo 3)', 1, '1F4E79')
-doc.add_paragraph('Aplicamos o procedimento de três perguntas para classificar individualmente cada mutante entre EQUIVALENTE e INSUFICIÊNCIA DA SUÍTE:')
+doc.add_paragraph('Procedimento de três perguntas baseadas em Papadakis et al. (2019):')
 
 classificacoes = [
-    ('CLASSIFICAÇÃO DO MUTANTE 1:', 'Pergunta 1 (Existe entrada com resultado diferente?): Sim.\nPergunta 2 (Qual entrada concreta?): Quando o saldo de conta de origem é exatamente igual ao valor da transferência.\nClassificação final: INSUFICIÊNCIA DA SUÍTE'),
-    ('CLASSIFICAÇÃO DO MUTANTE 2:', 'Pergunta 1: Sim.\nPergunta 2: Qualquer caso normal de transferência onde a conta de origem é diferente da de destino (origem != destino).\nClassificação final: INSUFICIÊNCIA DA SUÍTE'),
-    ('CLASSIFICAÇÃO DO MUTANTE 3:', 'Pergunta 1: Sim.\nPergunta 2: Tentativa de transferência com valor exatamente igual a zero (0.00).\nClassificação final: INSUFICIÊNCIA DA SUÍTE')
+    ('CLASSIFICAÇÃO DO MUTANTE 1:', 'Q1 (Saída diferente?): Sim.\nQ2 (Entrada concreta): Transferência onde saldo == valor (ex: saldo 1000.00 e valor 1000.00).\nClassificação final: INSUFICIÊNCIA DA SUÍTE'),
+    ('CLASSIFICAÇÃO DO MUTANTE 2:', 'Q1 (Saída diferente?): Sim.\nQ2 (Entrada concreta): Transferência válida para contas distintas (ex: origem 1, destino 2).\nClassificação final: INSUFICIÊNCIA DA SUÍTE'),
+    ('CLASSIFICAÇÃO DO MUTANTE 3:', 'Q1 (Saída diferente?): Sim.\nQ2 (Entrada concreta): Transferência com valor exato de 0.00.\nClassificação final: INSUFICIÊNCIA DA SUÍTE')
 ]
 for lbl, desc in classificacoes:
     p = doc.add_paragraph()
@@ -127,26 +127,26 @@ for lbl, desc in classificacoes:
 
 # ===== 3. DESCRIÇÃO EM TERMOS DE NEGÓCIO =====
 heading(doc, '3. Descrição em Termos de Negócio (Passo 4)', 1, '1F4E79')
-doc.add_paragraph('Traduzimos os mutantes de insuficiência identificados para regras de negócio inteligíveis para analistas e gerentes:')
+doc.add_paragraph('Tradução dos mutantes de insuficiência para regras de negócio de alto nível:')
 
 negocio_info = [
     (
-        'MUTANTE 1:',
-        'a) Que regra de negócio do internet banking esta linha implementa? Permite que o cliente transfira até o limite do seu saldo atual, incluindo a possibilidade de esvaziar totalmente a conta.\n'
-        'b) Qual entrada concreta faria o sistema com a linha mutada se comportar diferente? Uma transferência onde saldo == valor (Ex: Saldo de R$ 1000.00 e transferência de R$ 1000.00).\n'
-        'c) Como o sistema deveria responder a essa entrada? Permitindo a transação com código HTTP 200 e mensagem "Transferencia realizada".'
+        'MUTANTE 1 (Saldo limite):',
+        'a) Regra: O cliente pode transferir todo o seu saldo, zerando a conta.\n'
+        'b) Entrada: Transferência com valor = 1000.00 em conta com saldo = 1000.00.\n'
+        'c) Resposta: HTTP 200 ("Transferencia realizada").'
     ),
     (
-        'MUTANTE 2:',
-        'a) Que regra de negócio do internet banking esta linha implementa? Bloqueia qualquer transferência realizada para a própria conta (origem == destino).\n'
-        'b) Qual entrada concreta diferenciaria os comportamentos? Qualquer transferência válida para terceiros (origem != destino).\n'
-        'c) Como o sistema deveria responder a essa entrada? Processando a transação normalmente (HTTP 200) em vez de bloqueá-la como se fossem iguais (HTTP 422).'
+        'MUTANTE 2 (Integridade de contas):',
+        'a) Regra: Bloquear transferência para a própria conta.\n'
+        'b) Entrada: Transferência normal para conta diferente (origem 1, destino 2).\n'
+        'c) Resposta: HTTP 200 ("Transferencia realizada").'
     ),
     (
-        'MUTANTE 3:',
-        'a) Que regra de negócio do internet banking esta linha implementa? Valida se o valor de qualquer transferência realizada é estritamente positivo (maior que zero).\n'
-        'b) Qual entrada concreta diferenciaria os comportamentos? Uma tentativa de transferência com valor igual a zero (0.00).\n'
-        'c) Como o sistema deveria responder a essa entrada? Bloqueando com HTTP 422 e mensagem "Valor deve ser positivo".'
+        'MUTANTE 3 (Valor positivo):',
+        'a) Regra: Validar se o valor transferido é estritamente maior que zero.\n'
+        'b) Entrada: Transferência com valor de 0.00.\n'
+        'c) Resposta: HTTP 422 ("Valor deve ser positivo").'
     )
 ]
 for lbl, desc in negocio_info:
@@ -191,16 +191,16 @@ doc.add_paragraph('Observações da revisão estrutural das sugestões de códig
 
 critica_items = [
     (
-        'a) O Gemini usou Flask test client ou tentou usar requests HTTP?',
-        'Inicialmente, o Gemini sugeriu a utilização da biblioteca requests direcionando requisições para http://localhost:5000. Isso violaria as premissas estabelecidas no Sprint 4, pois geraria dependência de rede, lentidão e instabilidade (flaky tests). Corrigimos importando diretamente o aplicativo e utilizando with app.test_client() as client para testes nativos rápidos em memória.'
+        'a) Uso do Flask test client ou requests HTTP?',
+        'O Gemini tentou utilizar requests.post contra http://localhost:5000. Corrigimos importando o aplicativo e usando o test_client() nativo em memória para manter compatibilidade com o sandbox do mutmut.'
     ),
     (
-        'b) O Gemini redefiniu alguma fixture de reset de banco no transferencia_steps.py?',
-        'Sim, o Gemini tentou inserir uma fixture de inicialização de banco local de forma redundante. Excluímos essa função, pois a fixture autouse do conftest.py global já zera e popula o banco de dados SQLite de maneira centralizada a cada teste.'
+        'b) Duplicação da fixture de reset?',
+        'Sim. A IA gerou uma fixture local redundante para limpar o banco. Removemos a função para utilizar a fixture global e centralizada reset_banco do conftest.py.'
     ),
     (
-        'c) O Gemini acertou o uso da fixture client do conftest?',
-        'O Gemini compreendeu a fixture client, porém apresentou falhas na persistência do estado da resposta HTTP entre os passos. Corrigimos definindo uma fixture context de escopo de função para armazenar context["response"] e transmiti-la com sucesso dos blocos @when para as validações @then.'
+        'c) Uso da fixture client do conftest?',
+        'O Gemini falhou em manter a persistência do objeto de resposta HTTP entre os passos. Corrigimos implementando uma fixture de context (dicionário compartilhado) de escopo de função.'
     )
 ]
 for lbl, desc in critica_items:
@@ -264,7 +264,7 @@ pytest_out = (
     'test_banking_bdd.py::test_transferencia_com_saldo_exatamente_igual_ao_valor PASSED [ 33%]\n'
     'test_banking_bdd.py::test_transferencia_da_conta_para_ela_mesma_deve_ser_bloqueada PASSED [ 66%]\n'
     'test_banking_bdd.py::test_transferencia_com_valor_zero_deve_ser_rejeitada PASSED [100%]\n'
-    '============================== 8 passed in 0.88s ==============================='
+    '============================== 3 passed in 0.88s ==============================='
 )
 p_py = doc.add_paragraph()
 mono(p_py, pytest_out)
@@ -277,7 +277,7 @@ mut_out = (
     'MUTANTE 3 - status após Sprint 5 (valor < 0): KILLED\n\n'
     'Evidência mutmut results:\n'
     '  Running mutation testing\n'
-    '  7/7  🎉 5  🫥 2  ⏰ 0  🤔 0  ... (Todos os mutantes de insuficiência foram eliminados)'
+    '  7/7  🎉 5  🫥 2  ⏰ 0  ... (Todos os mutantes de insuficiência foram eliminados)'
 )
 p_mut = doc.add_paragraph()
 mono(p_mut, mut_out)
@@ -331,5 +331,5 @@ for q, a in sprint5_ref:
     p.add_run(a)
 
 # --- Salvar documento ---
-doc.save('relatorios/Relatorio_Sprint5_LeonardoEliel.docx')
+doc.save('relatorios/entregas/Relatorio_Sprint5_LeonardoEliel.docx')
 print("Documento Relatorio_Sprint5_LeonardoEliel.docx gerado com sucesso!")

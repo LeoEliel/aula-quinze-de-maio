@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.hypothesis/
+.pytest_cache/
+.coverage
+
+# Virtual environment
+venv/
+
+# Mutmut working directory
+mutants/__pycache__/
+mutants/.pytest_cache/
+
+# Banco de dados SQLite (gerado em runtime)
+banking.db
+
+# Relatórios gerados (XMLs do pytest)
+report.xml
+
+# OS
+.DS_Store
+Thumbs.db

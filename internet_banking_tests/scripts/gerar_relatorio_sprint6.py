@@ -363,5 +363,5 @@ for q, a in r_ques:
     p.add_run(a)
 
 # --- Salvar documento ---
-doc.save('relatorios/Relatorio_Sprint6_LeonardoEliel.docx')
+doc.save('relatorios/entregas/Relatorio_Sprint6_LeonardoEliel.docx')
 print("Documento Relatorio_Sprint6_LeonardoEliel.docx gerado com sucesso!")

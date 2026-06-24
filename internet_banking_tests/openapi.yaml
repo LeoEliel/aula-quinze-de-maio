@@ -1,0 +1,208 @@
+openapi: "3.1.0"
+info:
+  title: Internet Banking API
+  description: >
+    Sistema de Internet Banking — API REST para consulta de saldo,
+    transferências entre contas e extrato bancário.
+    Desenvolvido na disciplina de Teste de Software — IFRO Campus Ariquemes.
+  version: "1.0.0"
+  contact:
+    name: Leonardo Eliel Dias da Silva
+    email: leonardo.eliel@ifro.edu.br
+
+servers:
+  - url: http://127.0.0.1:5000
+    description: Servidor de desenvolvimento local
+
+paths:
+  /saldo/{conta_id}:
+    get:
+      operationId: getSaldo
+      summary: Consultar saldo de uma conta
+      description: Retorna o saldo atual, o titular e o ID da conta informada.
+      parameters:
+        - name: conta_id
+          in: path
+          required: true
+          description: ID numérico da conta bancária
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: Saldo retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [conta_id, titular, saldo]
+                properties:
+                  conta_id:
+                    type: integer
+                    description: ID da conta consultada
+                  titular:
+                    type: string
+                    description: Nome do titular da conta
+                  saldo:
+                    type: number
+                    format: double
+                    description: Saldo atual em reais
+        "404":
+          description: Conta não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Erro"
+
+  /transferencia:
+    post:
+      operationId: realizarTransferencia
+      summary: Realizar transferência entre contas
+      description: >
+        Transfere um valor da conta de origem para a conta de destino.
+        Valida existência das contas, saldo suficiente, valor positivo
+        e contas distintas.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [origem, destino, valor]
+              properties:
+                origem:
+                  type: integer
+                  description: ID da conta de origem
+                destino:
+                  type: integer
+                  description: ID da conta de destino
+                valor:
+                  type: number
+                  format: double
+                  exclusiveMinimum: 0
+                  description: Valor a transferir (deve ser positivo)
+      responses:
+        "200":
+          description: Transferência realizada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [mensagem, valor]
+                properties:
+                  mensagem:
+                    type: string
+                    enum: ["Transferencia realizada"]
+                  valor:
+                    type: number
+                    format: double
+        "400":
+          description: Corpo inválido ou campos obrigatórios ausentes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Erro"
+        "404":
+          description: Conta de origem ou destino não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Erro"
+        "422":
+          description: >
+            Erro de regra de negócio — valor não positivo,
+            origem igual a destino, ou saldo insuficiente
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Erro"
+                  - $ref: "#/components/schemas/ErroSaldo"
+        "500":
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [erro, detalhe]
+                properties:
+                  erro:
+                    type: string
+                  detalhe:
+                    type: string
+
+  /extrato/{conta_id}:
+    get:
+      operationId: getExtrato
+      summary: Consultar extrato de uma conta
+      description: >
+        Retorna o histórico de transferências (enviadas e recebidas)
+        da conta informada, ordenado por data decrescente.
+      parameters:
+        - name: conta_id
+          in: path
+          required: true
+          description: ID numérico da conta bancária
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: Extrato retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [conta_id, titular, saldo_atual, historico]
+                properties:
+                  conta_id:
+                    type: integer
+                  titular:
+                    type: string
+                  saldo_atual:
+                    type: number
+                    format: double
+                  historico:
+                    type: array
+                    items:
+                      type: object
+                      required: [id, origem, destino, valor, data_hora]
+                      properties:
+                        id:
+                          type: integer
+                        origem:
+                          type: integer
+                        destino:
+                          type: integer
+                        valor:
+                          type: number
+                          format: double
+                        data_hora:
+                          type: string
+        "404":
+          description: Conta não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Erro"
+
+components:
+  schemas:
+    Erro:
+      type: object
+      required: [erro]
+      properties:
+        erro:
+          type: string
+          description: Mensagem de erro descritiva
+    ErroSaldo:
+      type: object
+      required: [erro, saldo_atual]
+      properties:
+        erro:
+          type: string
+          enum: ["Saldo insuficiente"]
+        saldo_atual:
+          type: number
+          format: double
+          description: Saldo atual da conta de origem no momento da tentativa

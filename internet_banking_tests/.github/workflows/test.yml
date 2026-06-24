@@ -1,0 +1,40 @@
+name: Testes do Internet Banking
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Iniciar servidor da API em background
+        run: python app.py &
+
+      - name: Aguardar inicialização do servidor
+        run: sleep 5
+
+      - name: Executar suíte de testes agregada (pytest + BDD)
+        run: pytest test_transferencia.py -v --junit-xml=report.xml
+        continue-on-error: true
+
+      - name: Executar Schemathesis (contract testing)
+        run: schemathesis run openapi.yaml --url=http://127.0.0.1:5000 --checks all
+        continue-on-error: true
+
+      - name: Gerar Matriz de Rastreabilidade
+        run: python scripts/gera_matriz.py > matriz_rastreabilidade.md
+
+      - name: Upload de artefatos de evidência
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-sprint8
+          path: |
+            report.xml
+            matriz_rastreabilidade.md

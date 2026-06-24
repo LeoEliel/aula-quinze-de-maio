@@ -336,6 +336,6 @@ for ref in refs:
     p.add_run(ref).font.size = Pt(10)
 
 # ===== SALVAR =====
-output = 'Relatorio_Sprint4_LeonardoEliel.docx'
+output = 'relatorios/entregas/Relatorio_Sprint4_LeonardoEliel.docx'
 doc.save(output)
 print(f"✅ Documento gerado: {output}")
