@@ -23,5 +23,7 @@ internet_banking_tests/banking.db
 internet_banking_tests/report.xml
 internet_banking_tests/matriz_rastreabilidade.md
 internet_banking_tests/backups/
-references/*.pdf
-references/*.png
+*.pdf
+*.png
+
+Material-roteiro-17-06-2026.pdf
