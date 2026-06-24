@@ -1,24 +1,27 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 .hypothesis/
 .pytest_cache/
 .coverage
-
-# Virtual environment
 venv/
 
-# Mutmut working directory
-mutants/__pycache__/
-mutants/.pytest_cache/
-
-# Banco de dados SQLite (gerado em runtime)
-banking.db
-
-# Relatórios gerados (XMLs do pytest)
-report.xml
+# Mutmut
+mutants/
+.mutmut-cache
 
 # OS
 .DS_Store
 Thumbs.db
+*~
+*.swp
+.~lock.*
+
+# Específicos do Projeto
+internet_banking_tests/banking.db
+internet_banking_tests/report.xml
+internet_banking_tests/matriz_rastreabilidade.md
+internet_banking_tests/backups/
+references/*.pdf
+references/*.png

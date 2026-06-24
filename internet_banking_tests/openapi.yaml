@@ -18,7 +18,7 @@ paths:
   /saldo/{conta_id}:
     get:
       operationId: getSaldo
-      summary: Consultar saldo de uma conta
+      summary: Consltar saldo de uma conta
       description: Retorna o saldo atual, o titular e o ID da conta informada.
       parameters:
         - name: conta_id
