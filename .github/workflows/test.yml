@@ -4,6 +4,9 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: internet_banking_tests
     steps:
       - uses: actions/checkout@v4
 
@@ -36,5 +39,5 @@ jobs:
         with:
           name: evidencia-sprint8
           path: |
-            report.xml
-            matriz_rastreabilidade.md
+            internet_banking_tests/report.xml
+            internet_banking_tests/matriz_rastreabilidade.md
